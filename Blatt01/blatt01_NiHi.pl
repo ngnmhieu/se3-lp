@@ -1,3 +1,6 @@
+% Blatt01
+% Nico Hahn 6990715
+% Hieu Nguyen 6632126
 
 %Aufgabe 1.1
 ?- consult('familie.pl').
