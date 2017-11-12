@@ -92,8 +92,11 @@ fileToDir(FileName, DirId, DirName) :- file(_,DirId,FileName,_,_,_),
 parentDir(DirName, ParentId, ParentName) :- directory(_,DirName,ParentId,_,_),
 																						directory(ParentId,ParentName,_,_,_).
 
-% 4.1
+% 4.1 Dateinamen
+listFile(DirId, FileList) :- findall(FileName,file(_,DirId,FileName,_,_,_),FileList).
 
-% 4.2
+% 4.2 Namen aller Unterverzeichnisse
+listSubdir(ParentDirId, DirList) :- findall(SubDir,directory(_,SubDir,ParentDirId,_,_),DirList).
 
-% 4.3
+% 4.3 Anzahl aller Datein in einem bestimmten Verzeichnis
+countFiles(DirId, Count) :- listFile(DirId, FileList), length(FileList,Count).
