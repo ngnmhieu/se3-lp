@@ -5,7 +5,7 @@
 % Aufgabe 2
 ?- consult('haeuser.pl').
 
-% Aufgabe 2.1
+% 2.1
 
 % ?- obj(ObjNr,ObjTyp,bahnhofsstr,HausNr,BauJahr).
 % ObjNr = 2,
@@ -29,7 +29,7 @@
 % HausNr = 26,
 % BauJahr = 1997.
 
-% Aufgabe 2.2
+% 2.2
 
 % ?- obj(ObjNr,ObjTyp,StrName,HausNr,BauJahr), BauJahr < 1950.
 % ObjNr = 2,
@@ -44,7 +44,7 @@
 % BauJahr = 1901 ;
 % false.
 
-% Aufgabe 2.3
+% 2.3
 
 % ?- bew(_,_,_,Besitzer,Preis,_),Preis > 300000.
 % Besitzer = mueller,
@@ -52,7 +52,7 @@
 % Besitzer = piepenbrink,
 % Preis = 1500000.
 
-% Aufgabe 2.4
+% 2.4
 
 % ?- obj(ObjNr,ObjTyp,StrName,HausNr,BauJahr),
 %    bew(_,ObjNr,_,Kaeufer,KaufPreis,_),
@@ -68,6 +68,32 @@
 % VerkaufPreis = 315000 ;
 % false.
 
-% Aufgabe 2.5
+% 2.5
+% TODO
+% bagof(ObjNr,bew(_,ObjNr,_,Besitzer1,_,_), bew(_,ObjNr,_,Besitzer2,_,_), Besitzer1 \= Besitzer2).
 
-bagof(ObjNr,bew(_,ObjNr,_,Besitzer1,_,_), bew(_,ObjNr,_,Besitzer2,_,_), Besitzer1 \= Besitzer2).
+% 2.6
+% TODO
+
+% Aufgabe 3
+?- consult('dateiverzeichnis.pl').
+
+% 3.1
+fNameToFId(FId,FName) :- file(FId,_,FName,_,_,_).
+
+% 3.2
+dNameToDId(DId,DName) :- directory(DId,DName,_,_,_).
+
+% 3.3
+fileToDir(FileName, DirId, DirName) :- file(_,DirId,FileName,_,_,_),
+                                       directory(DirId,DirName,_,_,_).
+
+% 3.4
+parentDir(DirName, ParentId, ParentName) :- directory(_,DirName,ParentId,_,_),
+																						directory(ParentId,ParentName,_,_,_).
+
+% 4.1
+
+% 4.2
+
+% 4.3
