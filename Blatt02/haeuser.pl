@@ -17,4 +17,3 @@ bew(1,1,mueller,meier,250000,20120401).
 bew(2,3,schulze,schneider,260000,19881213).
 bew(3,3,schneider,mueller,315000,20011201).
 bew(4,5,bund,piepenbrink,1500000,19980601).
-
