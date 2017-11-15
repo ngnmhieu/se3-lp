@@ -16,5 +16,10 @@
 % Suche: dabei geht die Datenbank durch alle Fakten und versucht Belegungen fuer die Variablen
 % in dem Ziel / der Anfrage zu finden.
 
-
-
+% Aufgabe 1. Graphen malen und die Eigenschaften von denen erläutern
+% - gerichtet / ungerichtet
+% - zyklisch / azyklisch
+% - in / out degree
+% - unzusammenhängend / schwach / stark zusammenhängend
+% - Baum balanciert / unbalanciert 
+% - Verzweigungsfaktor vom Baum
