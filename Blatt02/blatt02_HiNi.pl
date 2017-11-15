@@ -78,7 +78,13 @@ mehrGekauft(ObjNr, StrName, HausNr) :- bew(_,ObjNr,_,Besitzer1,_,_),
 %  false.
 
 % 2.6
-% TODO
+% Hilfspraedikat
+bes(Kaeufer, HausId) :- bew(_,HausId,_,Kaeufer,_,_),
+                        not(bew(_,HausId,_,_,_,D2), D2 > D1).
+besitztMehrHaeuser :- bes(X, A), bes(X, B), A /= B.
+
+% alternativ
+mehrHaeuser :- bew (_,_,_,K,_,_), setof(X,bes(K,X),L), length(L,N), N >= 2.
 
 % Aufgabe 3
 ?- consult('dateiverzeichnis.pl').
