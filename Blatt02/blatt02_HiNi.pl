@@ -38,8 +38,8 @@ altBau(ObjNr,StrName,HausNr,BauJahr) :-
 
 % 2.3 Wer besitzt Haeuser, die mehr als 300.000 Euro wert sind?
 teuerHausBesitzer(Besitzer, Preis) :-
-  bew(_,_,_,Besitzer,Preis,_),
-  Preis > 300000.
+  bew(_,ID,_,Besitzer,Preis,D1), Preis > 300000,
+  not((bew(,ID,_,_,_,D2), D2 > D1)). % das Haus darf auch nicht weiterverkauft sein 
 
 % Ausgabe:
 %  Besitzer = mueller,
