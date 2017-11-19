@@ -76,6 +76,6 @@ treffpunkt(OrtA, OrtB, X) :- ist_erreichbar(OrtA, X),
 % Aufgabe 3.5
 % ist_erreichbar(?Start,?Ziel)
 ist_erreichbar_sperren(Start,Ziel) :- ist_erreichbar(Start,Ziel),
-                                      \+ gesperrt(StrNr),
+                                      \+ gesperrt(StrNr).
                                       
 % Aufgabe 3.6
