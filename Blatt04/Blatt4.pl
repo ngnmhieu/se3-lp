@@ -27,5 +27,5 @@ uv(DId,PId) :- directory(DId,_,DId2,_,_), uv(DId2,PId).
 % 2.4 Gesamtgröße aller Datein
 % sumsize(+DId, -Size)
 filesizes(DId, Size) :- file(_,DId,_,Size,_,_);
-                        (unterverzeichnisse(DId,UnterDId),file(_,UnterDId,_,Size,_,_)).
+                        (uv(UnterDId,DId),file(_,UnterDId,_,Size,_,_)).
 sumsize(DId, Size) :- findall(FSize,filesizes(DId,FSize),SizeList), sumlist(SizeList, Size).
