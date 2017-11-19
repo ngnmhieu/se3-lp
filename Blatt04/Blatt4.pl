@@ -22,10 +22,62 @@ nicht_zugreifbar(FId) :- \+ wurzel_datei(FId).
 % 2.3 Direkte und indirekte Unterverzeichnisse ermitteln
 % uv(+PId,-UnterDId)
 uv(PId,UnterDId) :- directory(UnterDId,_,PId,_,_).
-uv(PId,UnterDId) :- directory(UnterDId,_,UnterDId2,_,_), uv(PId,UnterDId2).
+uv(PId,UnterDId) :- directory(UnterDId,_,UnterDId2,_,_),
+                    uv(PId,UnterDId2).
 
 % 2.4 Gesamtgröße aller Datein
 % sumsize(+DId, -Size)
 filesizes(DId, Size) :- file(_,DId,_,Size,_,_);
                         (uv(DId,UnterDId),file(_,UnterDId,_,Size,_,_)).
-sumsize(DId, Size) :- findall(FSize,filesizes(DId,FSize),SizeList), sumlist(SizeList, Size).
+sumsize(DId, Size) :- findall(FSize,filesizes(DId,FSize),SizeList),
+                      sumlist(SizeList, Size).
+
+% Aufgabe 3
+?- consult('skigebiet.pl').
+% Aufgabe 3.1
+is_highest(P) :- strecke(_,P,_,_,_), \+ strecke(_,_,P,_,_).
+% -> Hoechste Punkte sind bgrootmoos, bgpanorama und bgzirben
+is_lowest(P) :- strecke(_,_,P,_,_), \+ strecke(_,P,_,_,_).
+% -> Niedrigste Punkte sind tlzollberg und tlgondel
+
+% Aufgabe 3.2
+% ist_erreichbar(?Start,?Ziel)
+ist_erreichbar(Start,Ziel) :- strecke(_,Start,Ziel,_,_).
+ist_erreichbar(Start,Ziel) :- strecke(_,Start,ZielMittel,_,_),
+                              ist_erreichbar(ZielMittel,Ziel).
+% Es ist nicht terminierungssicher. Wäre ein Strecke falsch definiert,
+% sodass ein Kreis entsteht, % dann haben wir eine endlose Schleife.
+% Eigenschaft: transitiv - falls es einen Pfad von A zu B und von B zu C
+% dann gibt es auch einen Pfad von A zu C.
+
+% Aufgabe 3.3
+% keine_verbindung(?OrtA,?OrtB) 
+% pit_con_sym prueft ob zwei Orte mit einander verbunden sind
+pit_con_sym(OrtA, OrtB) :- ist_erreichbar(OrtA, OrtB).
+pit_con_sym(OrtA, OrtB) :- ist_erreichbar(OrtB, OrtA).
+keine_verbindung(OrtA, OrtB) :- 
+  (strecke(_,OrtA,_,_,_); strecke(_,_,OrtA,_,_)),
+  (strecke(_,OrtB,_,_,_); strecke(_,_,OrtB,_,_)),
+  OrtA \= OrtB,
+  \+ pit_con_sym(OrtA, OrtB).
+
+% Aufgabe 3.4
+% Wir gehen davon aus dass eine kann in verschiedenen
+% Pisten fahren, d.h. sie kann bei einem Ort ihre Piste wechseln.
+% Ansonsten muss noch eine Bedingung gelten, dass es Pisten für
+% beiden gibt, damit sie den Treffpunkt erreichen koennen.
+% treffpunkt(+OrtA, +OrtB, -Treffpunkt)
+treffpunkt(OrtA, OrtB, X) :- OrtA = OrtB, X = OrtA.
+treffpunkt(OrtA, OrtB, X) :- ist_erreichbar(OrtA, OrtB), X = OrtB.
+treffpunkt(OrtA, OrtB, X) :- ist_erreichbar(OrtB, OrtA), X = OrtA.
+treffpunkt(OrtA, OrtB, X) :- ist_erreichbar(OrtA, X),
+                             ist_erreichbar(OrtB, X).
+
+% Aufgabe 3.5
+% ist_erreichbar(?Start,?Ziel)
+ist_erreichbar_sperren(Start,Ziel) :- strecke(StrNr,Start,Ziel,_,_),
+                                      \+ gesperrt(StrNr).
+ist_erreichbar_sperren(Start,Ziel) :- strecke(StrNr,Start,ZielMittel,_,_),
+                                      \+ gesperrt(StrNr),
+                                      ist_erreichbar(ZielMittel,Ziel).
+% Aufgabe 3.6

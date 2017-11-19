@@ -14,7 +14,7 @@ Hieu Nguyen 6632126
 - A und B sind (nach deutschem Recht) miteinander verheiratet - symmetrisch:
   A kann nicht sich selbst heiraten - also nicht reflexiv.
   A und B sind verheiratet bedeutet dann sind B und A auch.
-- A und B sind Geschwister - symmetrisch, ggf. reflexiv:
+- A und B sind Geschwister - symmetrisch, n:m, ggf. reflexiv:
   Geschwister-Relation zwischen A und B ist klar symmetrisch. Sie ist dann reflexiv, wenn die Definition von Geschwister ist, dass sie die gleichen Eltern haben. Dann sind A und C auch Geschwister falls B und C Geschwister sind. 
 - A ist größer oder gleich B - reflexiv und transitiv:
   A ist selbsverständlich größer oder gleich A (reflexiv). Falls B größer oder gleich C ist, dann ist A größer oder gleich C.
@@ -26,3 +26,5 @@ Hieu Nguyen 6632126
   A und B sind in der gleichen Straße und B und C sind in der gleichen Straße; da es nur eine Straße sein kann, sind A und C auch Häuser in der gleichen Straße (transitiv).
 
 ### Aufgabe 2
+
+### Aufgabe 3
