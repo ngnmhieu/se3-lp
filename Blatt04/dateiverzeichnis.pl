@@ -17,6 +17,10 @@ directory(10,urlaub,4,date(2008,5,23),date(2008,11,1)).
 directory(11,hochzeit,4,date(2007,12,4),date(2008,1,25)).
 directory(12,scheidung,4,date(2009,9,2),date(2009,11,5)).
 
+% hinzugefuegt
+directory(13,dir_nicht_wurzel,0,date(2009,9,2),date(2009,11,5)).
+directory(14,scheidung,12,date(2009,9,2),date(2009,11,5)).
+
 % file(FileId,DirId,Name,Size,DateCreated,DateModified)
 
 file(1,9,in_the_summertime,56,date(2007,5,2),date(2009,11,5)).
@@ -33,3 +37,7 @@ file(23,6,kirche,158,date(2008,1,28),date(2008,1,31)).
 file(24,6,festessen,151,date(2008,1,28),date(2008,1,31)).
 file(25,11,standesamt,33,date(2007,6,3),date(2007,6,3)).
 file(34,12,scheidungsklage,48,date(2009,9,2),date(2009,11,5)).
+
+% hinzugefuegt
+file(50,8,somefile,11,date(2009,9,2),date(2009,11,5)).
+file(40,13,file_nicht_wurzel,48,date(2009,9,2),date(2009,11,5)).
