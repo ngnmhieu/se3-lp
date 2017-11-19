@@ -20,10 +20,9 @@ wurzel_datei(FId) :- file(FId,DId,_,_,_,_), wurzel_dir(DId).
 nicht_zugreifbar(FId) :- \+ wurzel_datei(FId).
 
 % 2.3 Direkte und indirekte Unterverzeichnisse ermitteln
-% unterverzeichnisse(+DId,-UnterDId)
+% uv(+DId,-UnterDId)
 uv(DId,PId) :- directory(DId,_,PId,_,_).
 uv(DId,PId) :- directory(DId,_,DId2,_,_), uv(DId2,PId).
-unterverzeichnisse(DId,UnterDId) :- uv(UnterDId, DId).
 
 % 2.4 Gesamtgröße aller Datein
 % sumsize(+DId, -Size)
