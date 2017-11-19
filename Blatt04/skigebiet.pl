@@ -27,6 +27,9 @@ strecke(7,z2,mm,2,1000).
 strecke(8,mm,z3,2,1000).
 strecke(9,z3,z4,2,1000).
 
+strecke(6,k1,x1,3,1000).
+strecke(6,x1,mm,3,1000).
+
 % strecke(1               , bgrootmoos , kn1        , 1            , 1000).
 % strecke(2               , kn1        , kn2        , 1            , 900).
 % strecke(3               , kn2        , kn3        , 1            , 600).

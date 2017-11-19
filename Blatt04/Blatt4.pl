@@ -42,9 +42,11 @@ is_lowest(P) :- strecke(_,_,P,_,_), \+ strecke(_,P,_,_,_).
 
 % Aufgabe 3.2
 % ist_erreichbar(?Start,?Ziel)
-ist_erreichbar(Start,Ziel) :- strecke(_,Start,Ziel,_,_).
-ist_erreichbar(Start,Ziel) :- strecke(_,Start,ZielMittel,_,_),
-                              ist_erreichbar(ZielMittel,Ziel).
+ist_erreichbar_piste(Start,Ziel,PNr) :- strecke(_,Start,Ziel,PNr,_).
+ist_erreichbar_piste(Start,Ziel,PNr) :- strecke(_,Start,ZielX,PNr,_),
+                                        ist_erreichbar_piste(ZielX,Ziel,PNr).
+ist_erreichbar(Start,Ziel) :- ist_erreichbar_piste(Start,Ziel,_).
+
 % Es ist nicht terminierungssicher. Wäre ein Strecke falsch definiert,
 % sodass ein Kreis entsteht, % dann haben wir eine endlose Schleife.
 % Eigenschaft: transitiv - falls es einen Pfad von A zu B und von B zu C
@@ -74,8 +76,15 @@ treffpunkt(OrtA, OrtB, X) :- ist_erreichbar(OrtA, X),
                              ist_erreichbar(OrtB, X).
 
 % Aufgabe 3.5
-% ist_erreichbar(?Start,?Ziel)
-ist_erreichbar_sperren(Start,Ziel) :- ist_erreichbar(Start,Ziel),
-                                      \+ gesperrt(StrNr).
+:- dynamic(gesperrt/1).
+% ist_erreichbar_sperre(?Start,?Ziel)
+hilf_ist_erreichbar_sperre(StrNr,Start,Ziel,PNr) :-
+  strecke(StrNr,Start,Ziel,PNr,_),
+  \+ gesperrt(StrNr).
+hilf_ist_erreichbar_sperre(StrNr,Start,Ziel,PNr) :-
+  strecke(StrNr,Start,ZielMittel,PNr,_),
+  \+ gesperrt(StrNr),
+  hilf_ist_erreichbar_sperre(_,ZielMittel,Ziel,PNr).
+ist_erreichbar_sperre(Start,Ziel) :- hilf_ist_erreichbar_sperre(_,Start,Ziel,_).
                                       
 % Aufgabe 3.6
