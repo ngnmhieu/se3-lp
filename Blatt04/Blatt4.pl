@@ -36,15 +36,19 @@ sumsize(DId, Size) :- findall(FSize,filesizes(DId,FSize),SizeList),
 ?- consult('skigebiet.pl').
 % Aufgabe 3.1
 is_highest(P) :- strecke(_,P,_,_,_), \+ strecke(_,_,P,_,_).
+% Hoechste Punkte sind die die niemals als Zeil auftauchen
 % -> Hoechste Punkte sind bgrootmoos, bgpanorama und bgzirben
 is_lowest(P) :- strecke(_,_,P,_,_), \+ strecke(_,P,_,_,_).
+% Niedrigste Punkte sind die die niemals als Start auftauchen
 % -> Niedrigste Punkte sind tlzollberg und tlgondel
 
 % Aufgabe 3.2
 % ist_erreichbar(?Start,?Ziel)
-ist_erreichbar_piste(Start,Ziel,PNr) :- strecke(_,Start,Ziel,PNr,_).
-ist_erreichbar_piste(Start,Ziel,PNr) :- strecke(_,Start,ZielX,PNr,_),
-                                        ist_erreichbar_piste(ZielX,Ziel,PNr).
+ist_erreichbar_piste(Start,Ziel,PNr) :-
+  strecke(_,Start,Ziel,PNr,_).
+ist_erreichbar_piste(Start,Ziel,PNr) :-
+  strecke(_,Start,ZielX,PNr,_),
+  ist_erreichbar_piste(ZielX,Ziel,PNr).
 ist_erreichbar(Start,Ziel) :- ist_erreichbar_piste(Start,Ziel,_).
 
 % Es ist nicht terminierungssicher. Wäre ein Strecke falsch definiert,
@@ -64,10 +68,6 @@ keine_verbindung(OrtA, OrtB) :-
   \+ pit_con_sym(OrtA, OrtB).
 
 % Aufgabe 3.4
-% Wir gehen davon aus dass eine kann in verschiedenen
-% Pisten fahren, d.h. sie kann bei einem Ort ihre Piste wechseln.
-% Ansonsten muss noch eine Bedingung gelten, dass es Pisten für
-% beiden gibt, damit sie den Treffpunkt erreichen koennen.
 % treffpunkt(+OrtA, +OrtB, -Treffpunkt)
 treffpunkt(OrtA, OrtB, X) :- OrtA = OrtB, X = OrtA.
 treffpunkt(OrtA, OrtB, X) :- ist_erreichbar(OrtA, OrtB), X = OrtB.
@@ -86,5 +86,3 @@ hilf_ist_erreichbar_sperre(StrNr,Start,Ziel,PNr) :-
   \+ gesperrt(StrNr),
   hilf_ist_erreichbar_sperre(_,ZielMittel,Ziel,PNr).
 ist_erreichbar_sperre(Start,Ziel) :- hilf_ist_erreichbar_sperre(_,Start,Ziel,_).
-                                      
-% Aufgabe 3.6
