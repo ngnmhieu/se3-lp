@@ -13,14 +13,9 @@
 % ?- d(x,d(y,d(z,nil))) = d(X,Y).
 % X = x,
 % Y = d(y, d(z, nil)).
-%
-% d wird erfolgreich unifiziert.
-% X wird dann an x gebunden.
-% Y wird an d(y, d(z, nil))
 
 % ?- m(X,c(g),h(X)) = m(t(r,s),c(u),h(g(T)),t).
 % false.
-%
 % m wird zunaechst unifiziert. X wird an t(r,s) gebunden.
 % Es schlaegt fehl bei der Unifikation von c(g) und c(u).
 
@@ -28,15 +23,18 @@
 % X = a,
 % Y = b,
 % Z = c.
-%
-% TODO
+% p wird zunaechst erfolgreich unifiziert, X wird an a gebunden.
+% Das 2. Praedikat p wird unifiziert, Y wird an b gebunden.
+% Das 3. Praedikat p wird unifiziert, Z wird an c gebunden.
 
 % ?- t(t(t(a,b),c),t(d,t(e,f))) = t(P,t(Q,R)).
 % P = t(t(a, b), c),
 % Q = d,
 % R = t(e, f).
-%
-% TODO
+% Das erste t wird erfolgreich unifiziert.
+% P wird bei der 2. Unifikation an t(t(a,b),c) gebunden.
+% Bei der 3. Unifikation zw. t(d,t(e,f)) und t(Q,R) werden
+% Q and d bebunden und R an t(e,f) gebunden
 
 % ?- False = not(false).
 % False = not(false).
@@ -55,16 +53,20 @@ nachfolger(X,s(X)).
 % nachfolger(s(X),s(Y)) :- nachfolger(X,Y).
 
 % 2.3 unmittelbarer Vorgaenger
-% vorgaenger(?X, ?Y).
-% TODO
+vorgaenger(s(X),X).
+% oder
+% vorgaenger(X,Y) :- nachfolger(Y,X).
 
 % 2.4 kleiner gleich
 % lte(?X,?Y)
-% TODO
+lte(0,0).
+lte(0,s(_)).
+lte(s(X),s(Y)) :- lte(X,Y).
 
 % 2.5 Pruefe ob Peano2 = Peano1 * 2
 % verdoppelt(?Peano1, ?Peano2)
-% TODO
+verdoppelt(0,0).
+verdoppelt(s(X),s(s(Y))) :- verdoppelt(X,Y).
 
 % 2.6 Sub = Peano1 - Peano2
 % sub(?Peano1,?Peano2,?Sub)
@@ -100,7 +102,5 @@ ist_erreichbar(Start,Ziel,Return) :-
   ist_erreichbar_rek(Start,Ziel,0,Return).
 
 % 4.2
-% TODO
 
 % Aufgabe 5
-% TODO
