@@ -45,6 +45,10 @@
 % peano2int(+Peano,-Int)
 peano2int(0,0).
 peano2int(s(X),Y) :- peano2int(X,Z), Y is Z + 1.
+% Alternativ
+%  peano2int(P,I) :- piH(P,J), I is J.
+%  piH(0,0).
+%  piH(s(X), Y+1) :- piH(X,Y).
 
 % 2.2 unmittelbarer Nachfolger
 nachfolger(X,s(X)).
@@ -62,6 +66,9 @@ vorgaenger(s(X),X).
 lte(0,0).
 lte(0,s(_)).
 lte(s(X),s(Y)) :- lte(X,Y).
+% oder
+% lte(0,_).
+% lte(s(X),s(Y)) :- lte(X,Y).
 
 % 2.5 Pruefe ob Peano2 = Peano1 * 2
 % verdoppelt(?Peano1, ?Peano2)
@@ -79,8 +86,8 @@ sub(s(X),s(Y),R) :- sub(X,Y,R).
 
 % 2.7
 % min(+X,+Y,-Min)
-min(X,0,X).
-min(0,X,X).
+min(_,0,0).
+min(0,_,0).
 min(s(X),s(Y),s(Min)) :- min(X,Y,Min).
 
 % Aufgabe 3
