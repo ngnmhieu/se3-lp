@@ -64,11 +64,11 @@ zuwachsZins(Anlagebetrag,Bonuszins,Basiszinz,Anlagedauer,Endguthaben) :-
 %over(n, k, Result)
 
 over(_,0,1).
-over(k,k,1).
+over(K,K,1).
 
-over(n,k,Result) :-
-        n1 is n - 1,
-        k1 is k - 1,
-        over(n1,k1,sumA)
-        over(n1,k,SumB)
+over(N,K,Result) :-
+        N1 is (N - 1),
+        K1 is (K - 1),
+        over(N1,K1,SumA),
+        over(N1,K,SumB),
         Result is SumA + SumB.
