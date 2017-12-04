@@ -53,11 +53,36 @@ zuwachsZins(Anlagebetrag,Bonuszins,Basiszinz,Anlagedauer,Endguthaben) :-
 %Ab dem 4. Jahr eignet sich der variable Zinssatz mehr, da man dort mehr Zinsen / Jahr macht.
 
 
+% 2.1
+% pi_aufstieg(+Iterationen, ?Resultat)
+pi_aufstieg(1,4).
+pi_aufstieg(N,Res) :-
+  ResN is 4.0 * (-1.0)^(N+1) / (2*N-1),
+  NeuN is N - 1,
+  pi_aufstieg(NeuN,NeuRes),
+  Res is ResN + NeuRes.
 
+% pi_abstieg(+Iterationen, ?Resultat)
+pi_abstieg(N,Res) :- pi_rek(N,0,Res).
+pi_rek(1,Acc,Res) :- Res is Acc + 4.
+pi_rek(N,Acc,Res) :-
+  NeuAcc is Acc + 4.0 * (-1.0)^(N+1) / (2*N-1),
+  NeuN is N - 1,
+  pi_rek(NeuN,NeuAcc,Res).
 
+% Es liegt nur bei der pi_abstieg Endrekursion vor, denn die Zwischenergebnisse
+% werden bei pi_abstieg berechnet bevor es in die naechste Rekursionschritt
+% geht. Am Ende der Rekursion liegt das Endergebnis vor.
 
-
-
+% 2.2
+% Bzgl. der Verstaendlichkeit ist die pi_aufstieg Version verstaendlicher,
+% denn man besser sehen kann, dass das Ergebnis eines Problem von dem Ergebnis
+% des kleineren Problems abhaengt. Das ist schwerer bei pi_abstieg zu sehen. 
+% 
+% Bgzl. des Berechnungsverhalten ist die pi_abstieg Version effizienter. Denn
+% nach dem Abschluss einer Rekursionschritt nichts mehr berechnet werden muss,
+% kann ein Kompiler so optimieren, dass beim Aufruf einer rekursiven Funktion
+% das Stack fuer die aktuelle Funktion freigegeben wird.
 
 
 %Aufgabe 4.1
