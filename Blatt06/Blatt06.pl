@@ -6,6 +6,10 @@ zins(Anlagebetrag,Zinsfaktor,Anlagedauer,Endguthaben) :-
         Anlage is ((Zinsfaktor +1) * Anlagebetrag),
         Dauer is Anlagedauer - 1,
         zins(Anlage,Zinsfaktor,Dauer,Endguthaben).
+        
+%test: 
+%?- zins(1000,0.05,2,X).
+%X = 1102.5 
 
 
 %Aufgabe 1.2
@@ -13,7 +17,12 @@ zins(Anlagebetrag,Zinsfaktor,Anlagedauer,Endguthaben) :-
 
 zinsOhneRek(Anlagebetrag,_,0,Anlagebetrag).
 zinsOhneRek(Anlagebetrag,Zinsfaktor,Anlagedauer,Endguthaben) :-
-        Endguthaben is (Zinsfaktor * Anlagebetrag * Anlagedauer) + Anlagebetrag.Anlagebetrag
+        Endguthaben is (Zinsfaktor * Anlagebetrag * Anlagedauer) + Anlagebetrag.
+        
+%test:
+%?- zinsOhneRek(1000,0.05,2,X).
+%X = 1100.0.
+
 
 
 %Aufgabe 1.3
@@ -29,6 +38,15 @@ zuwachsZins(Anlagebetrag,Bonuszins,Basiszinz,Anlagedauer,Endguthaben) :-
         Anlage is (1+ Zins) * Anlagebetrag,
         Dauer is Anlagedauer - 1,
         zuwachsZins(Anlage, Bonus, Zins, Dauer, Endguthaben).
+        
+%test:
+
+%?- zuwachsZins(1000,0.04,0.01,2,X).
+%X = 1071.2.
+
+%?- zuwachsZins(1000,0.04,0.01,2,1071.2).
+%true. 
+        
 
 
 
