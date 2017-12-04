@@ -47,7 +47,10 @@ zuwachsZins(Anlagebetrag,Bonuszins,Basiszinz,Anlagedauer,Endguthaben) :-
 %?- zuwachsZins(1000,0.04,0.01,2,1071.2).
 %true. 
         
-
+% Aufgabe 1.5
+%
+%Das Modell mit dem festen Zinssatz eignet sich für 1 - 4 Jahre.
+%Ab dem 4. Jahr eignet sich der variable Zinssatz mehr, da man dort mehr Zinsen / Jahr macht.
 
 
 
