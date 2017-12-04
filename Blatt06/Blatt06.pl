@@ -1,5 +1,5 @@
-%Aufgabe 1.1
-%zins(+Anlagebetrag,+Zinsfaktor,+Anlagedauer,?Endguthaben)
+% Aufgabe 1.1
+% zins(+Anlagebetrag,+Zinsfaktor,+Anlagedauer,?Endguthaben)
 
 zins(Anlagebetrag,_,0,Anlagebetrag).
 zins(Anlagebetrag,Zinsfaktor,Anlagedauer,Endguthaben) :-
@@ -7,29 +7,27 @@ zins(Anlagebetrag,Zinsfaktor,Anlagedauer,Endguthaben) :-
         Dauer is Anlagedauer - 1,
         zins(Anlage,Zinsfaktor,Dauer,Endguthaben).
         
-%test: 
-%?- zins(1000,0.05,2,X).
-%X = 1102.5 
+% test: 
+% ?- zins(1000,0.05,2,X).
+% X = 1102.5 
 
-
-%Aufgabe 1.2
-%zinsOhneRek(+Anlagebetrag,+Zinsfaktor,+Anlagedauer,?Endguthaben)
-
+% Aufgabe 1.2
+% zinsOhneRek(+Anlagebetrag,+Zinsfaktor,+Anlagedauer,?Endguthaben)
 zinsOhneRek(Anlagebetrag,_,0,Anlagebetrag).
 zinsOhneRek(Anlagebetrag,Zinsfaktor,Anlagedauer,Endguthaben) :-
         Endguthaben is (Zinsfaktor * Anlagebetrag * Anlagedauer) + Anlagebetrag.
         
-%test:
-%?- zinsOhneRek(1000,0.05,2,X).
-%X = 1100.0.
+% test:
+% ?- zinsOhneRek(1000,0.05,2,X).
+% X = 1100.0.
 
 
 
-%Aufgabe 1.3
-%Aufgabe 1.1 ist bereits Endrekursiv gelöst.
+% Aufgabe 1.3
+% Aufgabe 1.1 ist bereits Endrekursiv gelöst.
 
-%Aufgabe 1.4
-%zuwachsZins(+Anlagebetrag,+Bonuszins,+Basiszinz,+Anlagedauer,?Endguthaben)
+% Aufgabe 1.4
+% zuwachsZins(+Anlagebetrag,+Bonuszins,+Basiszinz,+Anlagedauer,?Endguthaben)
 
 zuwachsZins(Anlagebetrag,_,_,0,Anlagebetrag).
 zuwachsZins(Anlagebetrag,Bonuszins,Basiszinz,Anlagedauer,Endguthaben) :-
@@ -40,22 +38,19 @@ zuwachsZins(Anlagebetrag,Bonuszins,Basiszinz,Anlagedauer,Endguthaben) :-
         zuwachsZins(Anlage, Bonus, Zins, Dauer, Endguthaben).
         
 %test:
-
-%?- zuwachsZins(1000,0.04,0.01,2,X).
-%X = 1071.2.
-
-%?- zuwachsZins(1000,0.04,0.01,2,1071.2).
-%true. 
+% ?- zuwachsZins(1000,0.04,0.01,2,X).
+% X = 1071.2.
+% ?- zuwachsZins(1000,0.04,0.01,2,1071.2).
+% true. 
         
 % Aufgabe 1.5
-%
-%Das Modell mit dem festen Zinssatz eignet sich für 1 - 4 Jahre.
-%Ab dem 4. Jahr eignet sich der variable Zinssatz mehr, da man dort mehr Zinsen / Jahr macht.
-
+% 
+% Das Modell mit dem festen Zinssatz eignet sich für 1 - 4 Jahre.
+% Ab dem 4. Jahr eignet sich der variable Zinssatz mehr, da man dort mehr Zinsen / Jahr macht.
 
 % 2.1
 % pi_aufstieg(+Iterationen, ?Resultat)
-pi_aufstieg(1,4).
+pi_aufstieg(0,0).
 pi_aufstieg(N,Res) :-
   ResN is 4.0 * (-1.0)^(N+1) / (2*N-1),
   NeuN is N - 1,
@@ -64,7 +59,7 @@ pi_aufstieg(N,Res) :-
 
 % pi_abstieg(+Iterationen, ?Resultat)
 pi_abstieg(N,Res) :- pi_rek(N,0,Res).
-pi_rek(1,Acc,Res) :- Res is Acc + 4.
+pi_rek(0,Acc,Res) :- Res is Acc.
 pi_rek(N,Acc,Res) :-
   NeuAcc is Acc + 4.0 * (-1.0)^(N+1) / (2*N-1),
   NeuN is N - 1,
@@ -84,13 +79,19 @@ pi_rek(N,Acc,Res) :-
 % kann ein Kompiler so optimieren, dass beim Aufruf einer rekursiven Funktion
 % das Stack fuer die aktuelle Funktion freigegeben wird.
 
+% 2.3
+% pi_alt(+Iterationen, ?Resultat)
+pi_alt(N,Res) :- pi_alt_rek(N,1,Result), Res is Result * 2.
+pi_alt_rek(0,Acc,Res) :- Res is Acc.
+pi_alt_rek(N,Acc,Res) :-
+  NeuAcc is Acc * ((2*N)/(2*N-1)) * ((2*N)/(2*N+1)),
+  NeuN is N - 1,
+  pi_alt_rek(NeuN,NeuAcc,Res).
 
-%Aufgabe 4.1
-%over(n, k, Result)
-
+% Aufgabe 4.1
+% over(n, k, Result)
 over(_,0,1).
 over(K,K,1).
-
 over(N,K,Result) :-
         N1 is (N - 1),
         K1 is (K - 1),
