@@ -16,12 +16,13 @@ zins(Anlagebetrag,Zinsfaktor,Anlagedauer,Endguthaben) :-
 zinsOhneRek(Anlagebetrag,_,0,Anlagebetrag).
 zinsOhneRek(Anlagebetrag,Zinsfaktor,Anlagedauer,Endguthaben) :-
         Endguthaben is (Zinsfaktor * Anlagebetrag * Anlagedauer) + Anlagebetrag.
+
+% Alternativ
+% zinsOhneRek(A,Z,D,E) :- E is A * (1+Z)^D;
         
 % test:
 % ?- zinsOhneRek(1000,0.05,2,X).
 % X = 1100.0.
-
-
 
 % Aufgabe 1.3
 % Aufgabe 1.1 ist bereits Endrekursiv gelöst.
@@ -48,7 +49,7 @@ zuwachsZins(Anlagebetrag,Bonuszins,Basiszinz,Anlagedauer,Endguthaben) :-
 % Das Modell mit dem festen Zinssatz eignet sich für 1 - 4 Jahre.
 % Ab dem 4. Jahr eignet sich der variable Zinssatz mehr, da man dort mehr Zinsen / Jahr macht.
 
-% 2.1
+% Aufgabe 2.1
 % pi_aufstieg(+Iterationen, ?Resultat)
 pi_aufstieg(0,0).
 pi_aufstieg(N,Res) :-
@@ -69,7 +70,7 @@ pi_rek(N,Acc,Res) :-
 % werden bei pi_abstieg berechnet bevor es in die naechste Rekursionschritt
 % geht. Am Ende der Rekursion liegt das Endergebnis vor.
 
-% 2.2
+% Aufgabe 2.2
 % Bzgl. der Verstaendlichkeit ist die pi_aufstieg Version verstaendlicher,
 % denn man besser sehen kann, dass das Ergebnis eines Problem von dem Ergebnis
 % des kleineren Problems abhaengt. Das ist schwerer bei pi_abstieg zu sehen. 
@@ -79,7 +80,7 @@ pi_rek(N,Acc,Res) :-
 % kann ein Kompiler so optimieren, dass beim Aufruf einer rekursiven Funktion
 % das Stack fuer die aktuelle Funktion freigegeben wird.
 
-% 2.3
+% Aufgabe 2.3
 % pi_alt(+Iterationen, ?Resultat)
 pi_alt(N,Res) :- pi_alt_rek(N,1,Result), Res is Result * 2.
 pi_alt_rek(0,Acc,Res) :- Res is Acc.
