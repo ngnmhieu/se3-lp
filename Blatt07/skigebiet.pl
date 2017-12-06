@@ -81,6 +81,8 @@ strecke(7,z2,mm,2,1000).
 strecke(8,mm,z3,2,1000).
 strecke(9,z3,z4,2,1000).
 
+strecke(10,xx,z1,3,1000).
+
 %Skipisten
 %
 %piste(Nummer,Name,Schwierigkeit)
@@ -107,4 +109,4 @@ lift(panoramabahn,tlpanorama,bgpanorama,10).
 lift(zollberglift,tlzollberg,bgzollberg,9).
 lift(zirbenbahn,tlzirben,bgzirben,10).
 
-
+lift(k2_xx,k2,xx,10).
