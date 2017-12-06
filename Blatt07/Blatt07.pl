@@ -15,10 +15,24 @@ zugriffspfad_datei(FName, ZP) :-
   append(DirZP, [FName], ZP).
 
 % Aufgabe 1.3
+% zuletzt_modifiziert(N, Liste)
 
 % Aufgabe 2.1
+?- consult('skigebiet.pl').
+% ist_erreichbar(+Start,+Ziel,-Strecke)
+ist_erreichbar_strecke(Start,Ziel,[Start,Ziel]) :-
+  strecke(_,Start,Ziel,_,_).
+ist_erreichbar_strecke(Start,Ziel,[Start|Strecke]) :-
+  strecke(_,Start,ZielX,_,_),
+  ist_erreichbar(ZielX,Ziel,Strecke).
 
 % Aufgabe 2.2
+% ist_erreichbar(+Start,+Ziel,-Strecke)
+ist_erreichbar_seilbahn(Start,Ziel,[Start,Ziel]) :-
+  strecke(_,Start,Ziel,_,_).
+ist_erreichbar_seilbahn(Start,Ziel,[Start|Strecke]) :-
+  strecke(_,Start,ZielX,_,_),
+  ist_erreichbar(ZielX,Ziel,Strecke).
 
 % Aufgabe 2.3
 

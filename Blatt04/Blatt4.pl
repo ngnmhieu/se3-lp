@@ -44,12 +44,9 @@ is_lowest(P) :- strecke(_,_,P,_,_), \+ strecke(_,P,_,_,_).
 
 % Aufgabe 3.2
 % ist_erreichbar(?Start,?Ziel)
-ist_erreichbar_piste(Start,Ziel,PNr) :-
-  strecke(_,Start,Ziel,PNr,_).
-ist_erreichbar_piste(Start,Ziel,PNr) :-
-  strecke(_,Start,ZielX,PNr,_),
-  ist_erreichbar_piste(ZielX,Ziel,PNr).
-ist_erreichbar(Start,Ziel) :- ist_erreichbar_piste(Start,Ziel,_).
+ist_erreichbar(Start,Ziel) :- strecke(_,Start,Ziel,_,_).
+ist_erreichbar(Start,Ziel) :- strecke(_,Start,ZielX,_,_),
+                              ist_erreichbar(ZielX,Ziel).
 
 % Es ist nicht terminierungssicher. Wäre ein Strecke falsch definiert,
 % sodass ein Kreis entsteht, % dann haben wir eine endlose Schleife.
