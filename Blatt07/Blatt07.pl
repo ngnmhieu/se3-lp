@@ -19,7 +19,7 @@ zugriffspfad_datei(FName, ZP) :-
 
 % Aufgabe 2.1
 ?- consult('skigebiet.pl').
-% ist_erreichbar(+Start,+Ziel,-Strecke)
+% ist_erreichbar_strecke(+Start,+Ziel,-Strecke)
 ist_erreichbar_strecke(Start,Ziel,[Start,Ziel]) :-
   strecke(_,Start,Ziel,_,_).
 ist_erreichbar_strecke(Start,Ziel,[Start|Strecke]) :-
@@ -27,7 +27,7 @@ ist_erreichbar_strecke(Start,Ziel,[Start|Strecke]) :-
   ist_erreichbar_strecke(ZielX,Ziel,Strecke).
 
 % Aufgabe 2.2
-% ist_erreichbar(+Start,+Ziel,-Strecke)
+% ist_erreichbar_seilbahn(+Start,+Ziel,-Strecke)
 ist_erreichbar_seilbahn(Start,Ziel,[Start,Ziel]) :-
   strecke(_,Start,Ziel,_,_).
 ist_erreichbar_seilbahn(Start,Ziel,[Start,Ziel]) :-
@@ -40,6 +40,18 @@ ist_erreichbar_seilbahn(Start,Ziel,[Start|Strecke]) :-
   ist_erreichbar_seilbahn(ZielX,Ziel,Strecke).
 
 % Aufgabe 2.3
+% ist_erreichbar_seilbahn_einmal(+Start,+Ziel,-Strecke)
+ist_erreichbar_seilbahn_einmal(Start,Ziel,[Start,Ziel]) :-
+  strecke(_,Start,Ziel,_,_).
+ist_erreichbar_seilbahn_einmal(Start,Ziel,[Start,Ziel]) :-
+  lift(_,Start,Ziel,_).
+ist_erreichbar_seilbahn_einmal(Start,Ziel,[Start|Strecke]) :-
+  strecke(_,Start,ZielX,_,_),
+  ist_erreichbar_seilbahn_einmal(ZielX,Ziel,Strecke).
+ist_erreichbar_seilbahn_einmal(Start,Ziel,[Start|Strecke]) :-
+  lift(_,Start,ZielX,_),
+  \+ member(Start, Strecke),
+  ist_erreichbar_seilbahn_einmal(ZielX,Ziel,Strecke).
 
 % Aufgabe 3.1
 

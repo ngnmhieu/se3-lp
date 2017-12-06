@@ -109,4 +109,4 @@ lift(panoramabahn,tlpanorama,bgpanorama,10).
 lift(zollberglift,tlzollberg,bgzollberg,9).
 lift(zirbenbahn,tlzirben,bgzirben,10).
 
-lift(k2_xx,k2,xx,10).
+lift(k4_xx,k4,xx,10).
