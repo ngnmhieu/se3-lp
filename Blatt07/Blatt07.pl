@@ -2,14 +2,17 @@
 % Gibt eine Liste der Verzeichnisnamen auf dem Zugriffspfad zurueck
 % zugriffspfad(+DirId, -Zugriffspfad)
 ?- consult('dateiverzeichnis.pl').
-zugriffspfad_rek(0, Acc, Acc).
-zugriffspfad_rek(DirId, Acc, ZP) :-
+zugriffspfad(0, []).
+zugriffspfad(DirId, ZP) :-
   directory(DirId,DirName,PId,_,_),
-  append(Acc, [DirName], NeuAcc),
-  zugriffspfad_rek(PId, NeuAcc, ZP).
-zugriffspfad(DirId, ZP) :- zugriffspfad_rek(DirId, [], ZP).
+  zugriffspfad(PId, ParentZP),
+  append(ParentZP, [DirName], ZP).
 
 % Aufgabe 1.2
+zugriffspfad_datei(FName, ZP) :-
+  file(_,DirId,FName,_,_,_),
+  zugriffspfad(DirId, DirZP),
+  append(DirZP, [FName], ZP).
 
 % Aufgabe 1.3
 
