@@ -3,15 +3,14 @@
 
 draw(Size) :-
    % define size of the display (picture size + scroll bar area)
-   SizeD is Size+20,
+   SizeD is Size+500,
    % create a new display and open it
-   new(Display,picture('*** Your picture''s name ***',size(SizeD,SizeD))),
+   new(Display,picture('RecursivevisruceR',size(SizeD,SizeD))),
    send(Display,open),
    send(Display,background,colour(black)), %* MK: ggf. Farbe auf 'white' stellen
-
    % draw the object on the display
    (
-        draw_object(Display,Size,Size /* , ***add additional parameters if needed *** */);
+        draw_object(Display,Size,500,0);
         true
    ),
    % if desired save the display as .jpg
@@ -28,25 +27,35 @@ draw(Size) :-
 
    !.
 
+color_num(red, 0).
+color_num(blue, 1).
+color_num(green, 2).
 
 % draw_object(Display,Size,CurrentSize,*** add additional parameters here, if needed ***)
 % draws a gradient graphics of size Size into Display
 % CurrentSize is decreased recursively fom Size to 0
-draw_object(_,_,0 /* , *** add additional parameters here, if needed *** */). 
-draw_object(Name,Size,CSize /* , *** add additional parameters here, if needed *** */) :- 
+draw_object(_,_,0,_). 
+draw_object(Name,Size,CSize,X) :- 
    CSize > 0 ,        % only for positive integers
 
   % *** insert the computation of graphical parameters here ***
-
+  Rest is CSize mod 3,
+  color_num(Color, Rest),
+  NewX is X + 3,
+  PosX is NewX,
+  PosY is 200 + sin(PosX/3)*80*Rest,
+  RealCSize is CSize,
   % *** create and draw the current graphical object here ***
-
+  send( Name , display , new(@_p,circle(10)) , point(PosX,PosY)),
+  %
   % *** send all additional parameters to the current graphical object ***
-
+  send( @_p , colour , Color),
+  
   % decrement CurrentSize and call draw_object recursively
-  CSizeNew is CSize - 2,
+  CSizeNew is CSize - 1,
 
 % writeln(CSizeNew),
-  draw_object(Name,Size,CSizeNew).
+  draw_object(Name,Size,CSizeNew, NewX).
 
 
 
@@ -94,5 +103,3 @@ mktxc :-
    send( @tx , font , font(times,bold,18) ).
 mkbzc :-
    send( @bz , arrows , both ).
-
-
