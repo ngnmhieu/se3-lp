@@ -25,11 +25,23 @@ get_schluss((_,_,X2),NeuX2) :- NeuX2 is X2 / 500 - 7.
 zip([], [], []).
 zip([X|Xs], [Y|Ys], [X,Y|Zs]) :- zip(Xs,Ys,Zs).
 
-draw_dax(DAX_Daten) :-
+get_daten(DAX_Daten) :-
   sort_dax(DAX),
   maplist(get_eroeffnung,DAX,DAX_Eroeffnung),
   maplist(get_schluss,DAX,DAX_Schluss),
-  zip(DAX_Eroeffnung, DAX_Schluss, DAX_Daten),
+  zip(DAX_Eroeffnung, DAX_Schluss, DAX_Daten).
+
+draw_dax() :-
+  get_daten(DAX_Daten),
   display('Zeitreihe', DAX_Daten).
 
 % Aufgabe 2
+window_average([_,_,_,_,_,_,_,_,_],[]).
+window_average([X1,X2,X3,X4,X5,X6,X7,X8,X9,X10|Rest],[Mittelwert|RestMittelwert]) :-
+  Mittelwert is (X1+X2+X3+X4+X5+X6+X7+X8+X9+X10)/10,
+  window_average([X2,X3,X4,X5,X6,X7,X8,X9,X10|Rest], RestMittelwert).
+
+draw_avg() :- 
+  get_daten(DAX_Daten),
+  window_average(DAX_Daten, Avg),
+  display('Zeitreihe', Avg).
