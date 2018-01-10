@@ -41,7 +41,10 @@ window_average([X1,X2,X3,X4,X5,X6,X7,X8,X9,X10|Rest],[Mittelwert|RestMittelwert]
   Mittelwert is (X1+X2+X3+X4+X5+X6+X7+X8+X9+X10)/10,
   window_average([X2,X3,X4,X5,X6,X7,X8,X9,X10|Rest], RestMittelwert).
 
-draw_avg() :- 
+% Aufgabe 3
+?- consult('display_pi_2.pl').
+draw_dax_avg() :- 
   get_daten(DAX_Daten),
   window_average(DAX_Daten, Avg),
-  display('Zeitreihe', Avg).
+  display('Zeitreihe', DAX_Daten, Avg).
+
