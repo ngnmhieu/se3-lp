@@ -1,9 +1,17 @@
+# SEIII - Logikprogrammierung
+
+## Übungsblatt 10
+
+Nico Hahn 6990715
+
+Hieu Nguyen 6632126
+
+```
 ?- consult('dax2016.pl').
 % ?- consult('dax2017.pl').
 ?- consult('display_pi.pl').
 
 % Aufgabe 1
-
 to_timestamp([Day,Month,Year],Timestamp) :-
   string_concat(Year,'-',Year_),
   string_concat(Year_,Month,Year_Month),
@@ -83,8 +91,8 @@ count_bigger_smaller([A|Rest], X, Bigger, Smaller) :-
 
 % Mittelwert einer Liste
 average(List, Average) :- sum_list(List, Sum),
-                          length(List, Count),
-                          Average is Sum/Count.
+                            length(List, Count),
+                            Average is Sum/Count.
 
 % Mittelpunkt von Eroeffnung und Schluss
 middlepoint((_,X1,X2), AVG) :- AVG is (X1 + X2) / 2.
@@ -96,10 +104,11 @@ dax_between(Start, End, (Time, X1, X2)) :-
   dax_timestamp(Time, X1, X2),
   StartTime =< Time,
   Time =< EndTime.
-  
+
 % Aufgabe 5
 difference((_,X1,X2), Diff) :- Diff is X2 - X1.
 guess_diff(Start, End, GuessedDiff) :-
   findall(X, dax_between(Start,End,X), DAX_Betweens),
   maplist(difference,DAX_Betweens,DAX_Differences),
   average(DAX_Differences, GuessedDiff).
+```
