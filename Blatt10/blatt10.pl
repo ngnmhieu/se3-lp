@@ -13,10 +13,10 @@ to_timestamp([Day,Month,Year],Timestamp) :-
 string_to_timestamp(DatumStr,Timestamp) :-
   split_string(DatumStr, ".", "", DatumTeile),
   to_timestamp(DatumTeile,Timestamp).
-dax_with_real_date(Datum, X1, X2, Timestamp) :- dax(Datum,X1,X2), string_to_timestamp(Datum,Timestamp).
+dax_timestamp(Timestamp, X1, X2) :- dax(Datum,X1,X2), string_to_timestamp(Datum,Timestamp).
 
 sort_dax(DAX) :-
-  findall((Timestamp, X1, X2), dax_with_real_date(Datum, X1, X2, Timestamp), List),
+  findall((Timestamp, X1, X2), dax_timestamp(Timestamp, X1, X2), List),
   sort(1, @<, List, DAX).
 
 get_eroeffnung((_,X1,_),NeuX1) :- NeuX1 is X1 / 500 - 7.
@@ -47,4 +47,54 @@ draw_dax_avg() :-
   get_daten(DAX_Daten),
   window_average(DAX_Daten, Avg),
   display('Zeitreihe', DAX_Daten, Avg).
+
+% Aufgabe 4
+% trend(+Start, +End, -Trend)
+% start: Anfang des Zeitfenster z.B. 29.02.2016
+% End: Ende des Zeitfenster z.B. 29.04.2016
+% Trend: Das Trend der Indexentwicklung
+%
+% Ein Mittelpunkt wird aus der Daten in dem angegebenen Fenster
+% berechnet und dann verglichen mit anderen Punkten.
+% Falls mehr kleinere Punkte als größere vorliegt, ist es ein Aufwärtstrend.
+% Andereseits ein Abwärtstrend. Falls die Anzahl von kleineren und größeren Punkten
+% gleich sind, dann ist es eine Seitwärtsbewegung.
+trend(Start, End, Trend) :-
+  findall(X, dax_between(Start,End,X), DAX_Betweens),
+  maplist(middlepoint,DAX_Betweens,DAX_Middlepoints),
+  average(DAX_Middlepoints, AVG),
+  count_bigger_smaller(DAX_Middlepoints, AVG, CountBigger, CountSmaller),
+  (CountSmaller > CountBigger, Trend = "Aufwärtstrend"
+  ; CountBigger > CountSmaller, Trend = "Abwärtstrend"
+  ; CountBigger = CountSmaller, Trend = "Seitwärtsbewegung").
+
+count_bigger_smaller([], _, 0, 0).
+count_bigger_smaller([A|Rest], X, Bigger, Smaller) :-
+  A > X,
+  count_bigger_smaller(Rest, X, BiggerRest, Smaller),
+  Bigger is BiggerRest + 1.
+count_bigger_smaller([A|Rest], X, Bigger, Smaller) :-
+  A < X,
+  count_bigger_smaller(Rest, X, Bigger, SmallerRest),
+  Smaller is SmallerRest + 1.
+count_bigger_smaller([A|Rest], X, Bigger, Smaller) :-
+  A = X,
+  count_bigger_smaller(Rest, X, Bigger, Smaller).
+
+% Mittelwert einer Liste
+average(List, Average) :- sum_list(List, Sum),
+                          length(List, Count),
+                          Average is Sum/Count.
+
+% Mittelpunkt von Eroeffnung und Schluss
+middlepoint((_,X1,X2), AVG) :- AVG is (X1 + X2) / 2.
+
+% find all dax index between start and end
+dax_between(Start, End, (Time, X1, X2)) :-
+  string_to_timestamp(Start, StartTime),
+  string_to_timestamp(End, EndTime),
+  dax_timestamp(Time, X1, X2),
+  StartTime =< Time,
+  Time =< EndTime.
+  
 
